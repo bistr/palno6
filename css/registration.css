@@ -1,0 +1,37 @@
+  @font-face {
+    font-family: roboto;
+    src: url(assets/robotcho.ttf);
+}
+
+body {
+  background-color: black;
+  font-family: roboto;
+  color: white;
+}
+
+.container-fluid {
+  display:flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top:35vh;
+}
+
+input{
+  margin-bottom:1vw;
+  width:90%;
+  border-radius:5px;
+  border:1px solid gray;
+  padding:1vh;
+}
+
+button
+{
+  width:90%;
+}
+
+.warning
+{
+	display: none;
+	margin-top: 2em;
+	color:#a0a0a0;
+}

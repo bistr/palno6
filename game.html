@@ -1,0 +1,510 @@
+<html>
+	<head>
+		<script src="key.js"></script>
+		<script src="jquery-3.2.1.slim.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/game.css">
+	</head>
+	<body>
+		
+			
+	<div class="container1">
+<header><span class="totheleft" id="cstracker"><b>0</b></span>
+  <div id="hearts">
+  <img class="heart" id="heart0" src="https://github.com/bistr/artHistory/blob/master/filled-heart.png?raw=true"/>
+  <img class="heart" id="heart1" src="https://github.com/bistr/artHistory/blob/master/filled-heart.png?raw=true"/>
+  <img class="heart" id="heart2" src="https://github.com/bistr/artHistory/blob/master/filled-heart.png?raw=true"/>
+</div>
+  <span class="totheright" id="pbtracker"><b>0</b></span></header>
+
+
+
+<div class="container">
+<div id="question">Кой написва &quot;Под Игото?&quot;</div>
+
+<div id="answerbox">
+<div id="errorMsg"><span>Грешка!<br> Отговорът е </span><br><span style='font-size:1.3em' id="popupAnswer"><b></b></span</div></div>
+
+        <div id="endGame">
+          <div id="part1">
+            <div> Ти получи </div>
+            <div id="score">64</div>
+            <div>точки!</div>
+          </div>
+          <div id="part2">ИГРАЙ СЛЕД 3..</div>
+          <div id="part3">
+
+
+             
+              <div id=silver><div class="hisc" id="hisc2" style="font-size:1.5em">140</div><div id="step2">Ina</div></div>
+             <div id=gold>
+                <div class="hisc" id="hisc1" style="font-size:1.7em">216</div>
+                <div id="step1">Bistra</div>
+                   </div>
+              <div id=bronze><div class="hisc" id="hisc3" style="font-size:1.3em">54</div><div id="step3">Vladimira</div></div>
+            <div id="hof">ЗАЛА НА СЛАВАТА</div>
+   
+
+            </div>
+            </div>
+<ul>
+        <li>
+          <div id=answer0 onclick="getClick(0)"></div>
+        </li>
+        <li>
+          <div id=answer1 onclick="getClick(1)"></div>
+        </li>
+        <li>
+          <div id=answer2 onclick="getClick(2)"></div>
+        </li>
+        <li>
+          <div id=answer3 onclick="getClick(3)"></div>
+        </li>
+</ul>
+</div>
+</div>
+</div>
+		
+		<script>
+		
+			var characters = {"Чичовци": ["Иван Селамсъзът", "Варлаам Копринарката"],
+"Под игото": [
+    "Бойчо Огнянов",
+    "Рада Госпожина",
+    "Соколов",
+    "чорбаджи Марко",
+    "Мичо Бейзадето",
+    "Кириак Стефчов",
+    "Йордан Диамандиев",
+    "Хаджи Ровоама"
+  ]
+};
+characters["Бай Ганьо"] = [
+  "Бай Ганьо",
+  "Дочоолу",
+  "Гочоолу",
+  "Иваница Граматиков"
+];
+characters["Ветрената мелница"] = ["Христина", "Лазар Дъбака", "дядо Корчан"];
+characters["Косачи"] = ["Лазо", "Благолаж"];
+characters["Мечтатели"] = ["Рустем", "Акима"];
+characters["Задушница"] = ["Станчо", "Стоилка"];
+characters["На оня свят"] = ["Дядо Матейко"];
+characters["Гераците"] = [
+  "Йордан Герака",
+  "Баба Марга",
+  "Божан",
+  "Петър",
+  "Павел",
+  "Йовка",
+  "Елка",
+  "Захаринчо",
+  "Матей Маргалака"
+];
+characters["Последна радост"] = ["Люцкан", "Цветана", "Инженера"];
+characters["Шибил"] = ["Шибил", "Рада", "Велико кехая"];
+characters["През чумавото"] = ["Тиха", "хаджи Драган", "Величко"];
+characters["Индже"] = [
+  "Индже",
+  "Пауна",
+  "Найден Гърбавото",
+  "Сяро Барутчията"
+];
+characters["Песента на колелетата"] = ["Сали Яшар", "Джапар", "Шакире"];
+characters["Албена"] = ["Албена", "Куцар", "Нягул"];
+characters["Другоселец"] = ["другоселецът", "Торашко"];
+characters["Серафим"] = ["Серафим", "Павлина", "Еньо"];
+characters["Тютюн"] = [
+  "Борис Морев",
+  "Ирина",
+  "Мария",
+  "татко Пиер",
+  "Костов",
+  "фон Гайер",
+  "Шишко",
+  "Варвара"
+];
+characters["Железният светилник"] = [
+  "Стоян Глаушев",
+  "Султана",
+  "Кочо",
+  "Лазар",
+  "Катерина",
+  "Климент Бенков",
+  "Рафе Клинче",
+  "Ния",
+  "Аврам Немтур",
+  "Божана",
+  "Андрей"
+];
+var authors = {};
+authors["Христо Ботев"] = [
+  "Майце си",
+  "Към брата си",
+  "Елегия",
+  "Борба",
+  "До моето първо либе",
+  "На прощаване",
+  "Хаджи Димитър",
+  "Моята молитва",
+  "Обесването на Васил Левски"
+];
+authors["Иван Вазов"] = [
+  "Българският език",
+  "Отечество любезно",
+  "При Рилския манастир",
+  "Елате ни вижте",
+  "Линее нашто поколение",
+  "Опълченците на Шипка",
+  "Дядо Йоцо гледа",
+  "Чичовци",
+  "Под игото"
+];
+authors["Алеко Константинов"] = ["Бай Ганьо", "Разни хора, разни идеали"];
+authors["Пенчо Славейков"] = [
+  "Cis moll",
+  "Ни лъх не дъхва над полени",
+  "Спи езерото; белостволи буки",
+  "Самотен гроб в самотен кът",
+  "Ралица"
+];
+authors["Пейо Яворов"] = [
+  "Градушка",
+  "Заточеници",
+  "Ще бъдеш в бяло",
+  "Две хубави очи",
+  "Стон",
+  "Две души",
+  "Сенки",
+  "Песента на човека",
+  "Маска"
+];
+authors["Елин Пелин"] = [
+  "Ветрената мелница",
+  "Косачи",
+  "Задушница",
+  "Мечтатели",
+  "На оня свят",
+  "Андрешко",
+  "Чорба от греховете на отец Никодим",
+  "Занемелите камбани",
+  "Гераците"
+];
+authors["Димчо Дебелянов"] = [
+  "Черна песен",
+  "Пловдив",
+  "Да се завърнеш…",
+  "Помниш ли, помниш ли..",
+  "Спи градът",
+  "Миг",
+  "Един убит",
+  "Сиротна песен",
+  "Тиха победа"
+];
+authors["Христо Смирненски"] = [
+  "Да бъде ден!",
+  "Ний",
+  "Йохан",
+  "Юноша",
+  "Стария музикант",
+  "Цветарка",
+  "Зимни вечери"
+];
+authors["Гео Милев"] = ["Септември"];
+authors["Атанас Далчев"] = [
+  "Прозорец",
+  "Болница",
+  "Стаята",
+  "Къщата",
+  "Повест",
+  "Книгите",
+  "Камък",
+  "Дяволско"
+];
+authors["Елисавета Багряна"] = [
+  "Кукувица",
+  "Стихии",
+  "Потомка",
+  "Вечната"
+];
+authors["Йордан Йовков"] = [
+  "Песента на колелетата",
+  "Последна радост",
+  "Шибил",
+  "През чумавото",
+  "Индже",
+  "Албена",
+  "Другоселец",
+  "Серафим"
+];
+authors["Никола Вапцаров"] = [
+  "Вяра",
+  "Писмо",
+  "Песен за човека",
+  "Сън",
+  "История",
+  "Завод",
+  "Кино",
+  "Прощално",
+  "Борбата е безмилостно жестока…"
+];
+authors["Димитър Талев"] = ["Железният светилник"];
+authors["Димитър Димов"] = ["Тютюн"];
+//to si ebalo mamata ot rechnici. tva ^ ne go gledai
+
+function getRandomElement(arr)
+{
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+var authorsList = Object.keys(authors);
+var textList = [];
+for (var i in authors) {
+  textList = textList.concat(authors[i]);
+}
+var charactersList = [];
+for (var i in characters) {
+  charactersList = charactersList.concat(characters[i]);
+}
+
+var lives=3;
+var myID=localStorage.getItem("myID");
+var modesList=["author of text","author of character","text of character"];
+var rightAnswerId;
+var answer;
+var topThree;
+var cs=0;
+var pb = parseInt(localStorage.getItem("pb"));
+
+function guess(mode)
+{
+  var question;
+  var rightAnswer;
+  var wrongAnswers=[];
+  var wrongAnswer;
+  var questionLocation;
+  var answerLocation;
+  var questionToAsk;
+  if (mode=="author of character")
+    {
+      var characterText=getRandomElement(Object.keys(characters));
+      question=getRandomElement(characters[characterText]);
+      for (var key in authors)
+        {
+          if (authors[key].indexOf(characterText)!=-1)
+            {
+              rightAnswer=key;
+            }
+          
+        }
+      answerLocation=authorsList.slice(0);
+      questionToAsk='Чий герой е ';
+    }
+  
+  if(mode=="text of character")
+    {
+      rightAnswer=getRandomElement(Object.keys(characters));
+      question=getRandomElement(characters[rightAnswer]);
+      answerLocation=textList.slice(0);
+      questionToAsk='Откъде е '; 
+    }
+  
+  if(mode=="author of text")
+    {
+      rightAnswer=getRandomElement(Object.keys(authors));
+      question=getRandomElement(authors[rightAnswer]);
+      answerLocation=authorsList.slice(0);
+      questionToAsk='Кой написва "'; 
+    }
+
+ 
+  while(wrongAnswers.length<3)
+    {
+      wrongAnswer=getRandomElement(answerLocation);
+      if (wrongAnswers.indexOf(wrongAnswer)==-1 && wrongAnswer!=rightAnswer)
+        {
+          wrongAnswers.push(wrongAnswer);
+        }
+    }
+  return [question,rightAnswer,wrongAnswers,questionToAsk];
+}
+
+function fillQuestion(mode)
+{
+  var guessArray=guess(mode).slice(0);
+  answer=guessArray[1];
+  if(mode=="author of text")
+  {
+    $("#question").text(guessArray[3]+guessArray[0]+'"?');
+  }
+  else
+  {
+    $("#question").text(guessArray[3]+guessArray[0]+'?');
+  }
+  
+  var rightAnswerId=getRandomElement([0,1,2,3]);
+  var wrongAnswerIdx=0;
+  for (var i=0; i<4; i++)
+    {
+      if (i==rightAnswerId)
+        {
+          $("#answer"+i.toString()).html(answer);
+        }
+      else
+        {
+          $("#answer"+i.toString()).html(guessArray[2][wrongAnswerIdx++]);
+        }
+    }
+  return rightAnswerId;
+}
+
+function getClick(choice)
+{
+  if (choice==rightAnswerId)
+    {
+      cs++;
+      updateScores();
+      playGame();
+    }
+  else
+    {
+      if (lives>1)
+        {
+          getTopScores();
+          reduceLives();
+          showPopup();
+          setTimeout(playGame,600)
+          //playGame();
+        }
+      else
+        {
+          fillCard();
+          fillScore();
+          reduceLives();
+          showPopup();
+          endGame();
+          cs=0;
+          updateScores();
+          refillLives();
+          playGame();
+        }
+    }
+}
+
+function playGame()
+{
+  $("#errorMsg").hide();
+  var mode=getRandomElement(modesList);
+  rightAnswerId=fillQuestion(mode);
+}
+
+function reduceLives()
+{
+    $("#heart" + --lives).attr("src","https://github.com/bistr/artHistory/blob/master/empty-heart.png?raw=true");
+}
+
+function refillLives()
+{
+  lives=3;
+  for (var i=0;i<3;i++)
+    {
+      $("#heart" + i).attr("src","https://github.com/bistr/artHistory/blob/master/filled-heart.png?raw=true");      
+    }
+}
+
+function updateScoreInDB()
+{
+    $.ajax( { url: "https://api.mlab.com/api/1/databases/palno6/collections/userScores/"+myID+"?apiKey="+apiKey,
+		  data: JSON.stringify( { "$set" : { "highScore" : pb } } ),
+		  type: "PUT",
+		  contentType: "application/json" } );
+  }
+
+
+
+function updateScores()
+{
+  if(cs>pb)
+    {
+      pb=cs;
+      localStorage.setItem("pb",pb);
+      updateScoreInDB();
+    }
+  document.getElementById("cstracker").innerHTML = "<b>" + cs + "</b>";
+  document.getElementById("pbtracker").innerHTML = "<b>" + pb + "</b>";
+}
+
+function getTopScores()
+{
+  $.ajax({
+ url:' https://api.mlab.com/api/1/databases/palno6/collections/userScores?s={"highScore":-1}&l=3&apiKey='+apiKey,
+   success: function(data) {
+     topThree=data;
+},
+    statusCode:{
+      200:function()
+      {
+        fillCard();
+      }
+    }
+  });
+}
+
+function showPopup()
+{
+  document.getElementById("popupAnswer").innerText = answer;
+  $("#errorMsg").show();
+  setTimeout(function() {
+    $("#errorMsg").hide();
+  },600);
+}
+
+function endGame()
+{
+  
+  $("#endGame").show();
+  var counter=document.getElementById("part2");
+  counter.innerText="Играй след 3...";
+  setTimeout(function(){counter.innerText="Играй след 2..."},1000);
+  setTimeout(function(){counter.innerText="Играй след 1..."},2000);
+  setTimeout(function(){$("#endGame").hide()},3000)
+}
+
+if (localStorage.getItem("pb"))
+  {
+    pb = parseInt(localStorage.getItem("pb"));
+  }
+else
+  {
+    pb=0;
+  }
+
+updateScores();
+$("#errorMsg").hide();
+$("#endGame").hide();
+playGame();
+function fillCard() {
+  for (var index=0;index<3;index++)
+    {
+      if (topThree[index]._id==myID && topThree[index].highScore<pb)
+        {
+          topThree[index].highScore=pb;
+        }
+    }
+  
+  document.getElementById("hisc1").innerText = topThree[0].highScore;
+  document.getElementById("hisc2").innerText = topThree[1].highScore;
+  document.getElementById("hisc3").innerText = topThree[2].highScore;
+ document.getElementById("step1").innerText = topThree[0].name;
+  document.getElementById("step2").innerText = topThree[1].name;
+  document.getElementById("step3").innerText =topThree[2].name;
+};
+
+function fillScore()
+{
+  document.getElementById("score").innerText = cs;
+}
+		
+		</script>
+	</body>
+</html>

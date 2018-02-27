@@ -1,0 +1,125 @@
+<html>
+	<head>
+		<script src="key.js"></script>
+		<script src="jquery-3.2.1.slim.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/leaderboard.css">
+	</head>
+	<body>
+		
+		<header> Класиране </header>
+		<div style="height:47px"></div>
+		
+		<script>
+		
+			function addIt(rank, name, score) {
+			  document.body.innerHTML +=
+				"<p><span class='rank'>" +
+				rank +
+				"</span><span class='name'>" +
+				name +
+				"</span><span class='score'>" +
+				score +
+				"</span></p>";
+			}
+			function User(name, highScore, id) {
+			  (this.id = id), (this.name = name), (this.highScore = highScore);
+			}
+			$.ajax({
+			  url:
+			  "https://api.mlab.com/api/1/databases/palno6/collections/userScores?apiKey=" +
+			  apiKey,
+			  success: function(data) {
+				var users1 = [];
+				for (var i = 0; i < data.length; i++) {
+				  users1.push(new User(data[i].name, data[i].highScore, data[i]._id));
+				}
+				localStorage.setItem("users", JSON.stringify(users1));
+			  },
+			  statusCode: {
+				200: function() {
+				  loadBoard();
+				}
+			  }
+			});
+			function comp(thing, thing2) {
+			  return thing2.highScore - thing.highScore;
+			}
+			function loadBoard() {
+			  var users = JSON.parse(localStorage.getItem("users"));
+			  users.sort(comp);
+			  //console.log(users)
+			  var rank = 0;
+			  for (var i = 0; i < users.length; i++) {
+				if (users[i].highScore && users[i].name) {
+				  rank += 1;
+				  addIt(rank, users[i].name, users[i].highScore);
+				  if (i == 0) {
+					$("p")
+					  .last()
+					  .css("backgroundColor", "#D4AF37");
+					$("p")
+					  .last()
+					  .css("color", "#fff");
+					$("p")
+					  .last()
+					  .css("text-shadow", "1px 2px #333");
+					$("p")
+					  .last()
+					  .css("box-shadow", "1px 1px 7px white, -1px -1px 7px white");
+				  }
+				  if (i == 1) {
+					$("p")
+					  .last()
+					  .css("backgroundColor", "#B8C2C2");
+					$("p")
+					  .last()
+					  .css("color", "#fff");
+					$("p")
+					  .last()
+					  .css("text-shadow", "1px 2px #333");
+					$("p")
+					  .last()
+					  .css("box-shadow", "1px 1px 6px white, -1px -1px 6px white");
+				  }
+				  if (i == 2) {
+					$("p")
+					  .last()
+					  .css("backgroundColor", "#CD7F32");
+					$("p")
+					  .last()
+					  .css("color", "#fff");
+					$("p")
+					  .last()
+					  .css("text-shadow", "1px 2px #333");
+					$("p")
+					  .last()
+					  .css("box-shadow", "1px 1px 5px white, -1px -1px 5px white");
+				  }
+				  if (!users[i].id.$oid) {
+					if (users[i].id == localStorage.getItem("myID")) {
+					  $("p:last").css("background-color", "#11BB66");
+					  $("p:last").css("color", "white");
+					  $("p")
+						.last()
+						.css("text-shadow", "1px 2px #333");
+					  $("p")
+						.last()
+						.css("box-shadow", "1px 1px 8px white, -1px -1px 8px white");
+					  $("p")
+						.last()
+						.attr("id", "me");
+					}
+				  }
+				}
+			  }
+			  document.getElementById("me").scrollIntoView();
+			  document
+				.getElementById("me")
+				.scrollIntoView({ behavior: "smooth", block: "end", inline: "center" });
+			}
+
+					
+		</script>
+	</body>
+</html>

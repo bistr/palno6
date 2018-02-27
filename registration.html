@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<script src="key.js"></script>
+		<script src="jquery-3.2.1.slim.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/registration.css">
+	</head>
+	<body>
+		
+		<div class="container-fluid"> 
+		<input id="input" type="text" placeholder="Въведи име..."</input>
+		  <button class="btn btn-success">Регистрирай ме</button>
+		  <p id="warningInvalid" class="warning"> Въведи валидно име. </p>
+			<p id="warningTooLong" class="warning"> Твърде дълго!</p>
+		  </div>
+		
+		<script>
+		
+			function showWarning(option)
+{
+	$("#warning"+option).show();
+	$("#input").val("");
+}
+
+function hideWarning(option)
+{
+	$("#warning"+option).hide();
+}
+
+
+function makeID() 
+{
+  var text = "";
+  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (var i = 0; i < 20; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  return text;
+}
+
+function register(username)
+{
+  var newID=makeID();
+  var user={
+    _id:newID,
+    name:username,
+    highScore:0
+    };
+  
+   $.ajax( { 
+ url:'https://api.mlab.com/api/1/databases/palno6/collections/userScores?apiKey='+apiKey,
+ data: JSON.stringify( [ user ] ),
+ type: 'POST',
+ contentType: 'application/json',
+ statusCode: {
+    200: function() {
+      localStorage.setItem("userAccount",username);
+			localStorage.setItem("pb","0");
+			localStorage.setItem("myID",newID);
+			window.location.href="index.html";
+      
+      }}
+} );
+  
+  
+}
+
+$(".btn").click(function(){
+	var name=$("#input").val();
+	if (name!="" && name.length<13 && (name.split(" ").length - 1)!=name.length)
+		{
+			register(name);
+				
+			
+			
+		}
+	else
+		{
+			if(name=="" || (name.split(" ").length - 1)==name.length)
+				{
+					showWarning("Invalid");
+					hideWarning("TooLong");
+				}
+			else
+				{
+					showWarning("TooLong");
+					hideWarning("Invalid");
+				}
+			
+		}
+  
+});
+		
+		</script>
+	</body>
+</html>

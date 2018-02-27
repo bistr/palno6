@@ -1,0 +1,32 @@
+<!DOCTYPE>
+<html>
+<head>
+<style>
+
+@font-face {
+    font-family: robotcho;
+    src: url(robotcho.ttf);
+}
+	
+body {
+  background-color: black;
+  font-family: robotcho;
+  color: white;
+  /*overflow:hidden; */
+}
+
+
+</style>
+</head>
+<body>
+	<a class="btn btn-success" href="game.html">Game</a>
+	<a class="btn btn-success" href="leaderboard.html">Leaderboard</a>
+<script>
+	if(!localStorage.getItem("userAccount"))
+	{
+		window.location.href="registration.html";
+	}
+</script>
+</body>
+	
+</html>				
